@@ -39,6 +39,20 @@ export const loginUser = asyncHandler(async (req, res) => {
   });
 });
 
+export const me = asyncHandler(async (req, res) => {
+  // req.user should be set by auth middleware
+  if (!req.user) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+
+  const user = await User.findById(req.user.id).select("-password"); // exclude password
+
+  if (!user) {
+    return res.status(404).json({ message: "User not found" });
+  }
+
+  res.json({ user });
+});
 export const getUserProfile = asyncHandler(async (req, res) => {
   // req.user is set by protect middleware
   if (!req.user) {
