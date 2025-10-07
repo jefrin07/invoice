@@ -76,3 +76,19 @@ export const findInvoice = asyncHandler(async (req, res) => {
 
   res.status(200).json(invoice);
 });
+
+export const deleteInvoices = asyncHandler(async (req, res) => {
+  const { ids } = req.body; // expecting { ids: ["id1", "id2"] }
+
+  if (!ids || !Array.isArray(ids) || ids.length === 0) {
+    return res.status(400).json({ message: "No invoice IDs provided" });
+  }
+
+  try {
+    const result = await Invoice.deleteMany({ _id: { $in: ids } });
+    res.status(200).json({ message: `${result.deletedCount} invoice(s) deleted successfully` });
+  } catch (err) {
+    console.error("Error deleting invoices:", err);
+    res.status(500).json({ message: err.message || "Server error" });
+  }
+});
