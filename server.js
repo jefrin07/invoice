@@ -5,6 +5,7 @@ import connectDB from "./configs/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import { errorHandler } from "./middleware/error.js";
 import invoiceRoutes from "./routes/invoiceRoutes.js";
+import posterRoutes from "./routes/posterRoutes.js";
 
 const PORT = process.env.PORT || 3000;
 const app = express();
@@ -27,6 +28,7 @@ connectDB()
 app.get("/", (req, res) => res.send("Server is running"));
 app.use("/api/auth", authRoutes);
 app.use("/api/invoices", invoiceRoutes);
+app.use("/api/posters", posterRoutes);
 
 // 404 handler
 app.use((req, res, next) => {

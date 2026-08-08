@@ -6,6 +6,9 @@ import {
   deleteInvoices,
   findInvoice,
 } from "../controllers/invoiceController.js";
+import {
+  getAllPosters
+} from "../controllers/posterController.js";
 
 const invoiceRoutes = express.Router();
 
